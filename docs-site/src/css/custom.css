@@ -1,0 +1,83 @@
+/* Physical AI Textbook — Dark Tech Theme */
+:root {
+  --ifm-color-primary: #00d4ff;
+  --ifm-color-primary-dark: #00bfe6;
+  --ifm-color-primary-darker: #00b5d9;
+  --ifm-color-primary-darkest: #0094b3;
+  --ifm-color-primary-light: #1ad9ff;
+  --ifm-color-primary-lighter: #26dbff;
+  --ifm-color-primary-lightest: #4ee2ff;
+  --ifm-background-color: #080b14;
+  --ifm-background-surface-color: #0d1117;
+  --ifm-navbar-background-color: #080b14;
+  --ifm-footer-background-color: #0d1117;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 212, 255, 0.1);
+  --ifm-font-family-base: "Inter", system-ui, -apple-system, sans-serif;
+  --ifm-font-family-monospace: "JetBrains Mono", "Fira Code", monospace;
+}
+
+[data-theme="dark"] {
+  --ifm-background-color: #080b14;
+  --ifm-background-surface-color: #0d1117;
+  --ifm-color-content: #e6edf3;
+  --ifm-color-content-secondary: #8b949e;
+  --ifm-navbar-background-color: rgba(8, 11, 20, 0.9);
+  --ifm-toc-border-color: #21262d;
+}
+
+/* Navbar blur */
+.navbar {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #21262d;
+}
+
+/* Sidebar */
+[data-theme="dark"] .menu__link {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .menu__link:hover,
+[data-theme="dark"] .menu__link--active {
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.06);
+}
+
+/* Code blocks */
+[data-theme="dark"] .prism-code {
+  background: #0d1117 !important;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+}
+
+/* Admonitions */
+[data-theme="dark"] .alert--info {
+  background: rgba(0, 212, 255, 0.06);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+/* Chatbot button */
+#chatbot-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #00d4ff;
+  color: #080b14;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+#chatbot-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 28px rgba(0, 212, 255, 0.5);
+}
