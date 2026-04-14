@@ -2,7 +2,20 @@
 title: Introduction to Humanoid Robotics
 description: The history, architecture, and key components of modern humanoid robot systems.
 sidebar_position: 1
+slug: intro
 ---
+
+import AskButton from '@site/src/components/AskButton';
+
+<div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--ifm-border-color)' }}>
+  <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>
+    Home &gt; Chapters &gt; Introduction to Humanoid Robotics
+  </small>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+     <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>⏱️ 5 min read</small>
+     <AskButton title="Humanoid Robotics" />
+  </div>
+</div>
 
 # Introduction to Humanoid Robotics
 

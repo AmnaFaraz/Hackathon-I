@@ -2,7 +2,20 @@
 title: A* and RRT Path Planning Algorithms
 description: Implementing A* and Rapidly-exploring Random Trees for autonomous robot navigation.
 sidebar_position: 1
+slug: intro
 ---
+
+import AskButton from '@site/src/components/AskButton';
+
+<div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--ifm-border-color)' }}>
+  <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>
+    Home &gt; Chapters &gt; Path Planning Algorithms
+  </small>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+     <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>⏱️ 10 min read</small>
+     <AskButton title="Path Planning" />
+  </div>
+</div>
 
 # A* and RRT Path Planning Algorithms
 

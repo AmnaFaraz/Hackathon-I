@@ -2,7 +2,20 @@
 title: NVIDIA Isaac Platform Overview
 description: Introduction to the NVIDIA Isaac robotics platform — Isaac Sim, Isaac Lab, Isaac ROS, and Isaac Perceptor.
 sidebar_position: 1
+slug: intro
 ---
+
+import AskButton from '@site/src/components/AskButton';
+
+<div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--ifm-border-color)' }}>
+  <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>
+    Home &gt; Chapters &gt; NVIDIA Isaac Platform
+  </small>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+     <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>⏱️ 12 min read</small>
+     <AskButton title="NVIDIA Isaac" />
+  </div>
+</div>
 
 # NVIDIA Isaac Platform Overview
 

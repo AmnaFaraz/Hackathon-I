@@ -2,7 +2,20 @@
 title: LLMs in Robotics (Groq examples)
 description: Using large language models as robot brains — task planning, code generation, and natural language interfaces using Groq.
 sidebar_position: 1
+slug: intro
 ---
+
+import AskButton from '@site/src/components/AskButton';
+
+<div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--ifm-border-color)' }}>
+  <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>
+    Home &gt; Chapters &gt; LLMs in Robotics
+  </small>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+     <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>⏱️ 15 min read</small>
+     <AskButton title="LLMs in Robotics" />
+  </div>
+</div>
 
 # LLMs in Robotics (Groq Examples)
 

@@ -50,17 +50,34 @@ const config: Config = {
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: "Physical AI Textbook",
+      title: "Panaversity AI",
       logo: {
-        alt: "Physical AI",
+        alt: "Panaversity AI",
         src: "img/logo.svg",
       },
       items: [
         {
-          type: "docSidebar",
-          sidebarId: "tutorialSidebar",
+          to: "/#curriculum",
+          label: "Curriculum",
           position: "left",
+        },
+        {
+          type: "dropdown",
           label: "Chapters",
+          position: "left",
+          items: [
+            { label: "1. Intro to LLMs", to: "/chapter-1/intro" },
+            { label: "2. Prompt Engineering", to: "/chapter-2/intro" },
+            { label: "3. RAG Systems", to: "/chapter-3/intro" },
+            { label: "4. Fine-Tuning", to: "/chapter-4/intro" },
+            { label: "5. AI Agents", to: "/chapter-5/intro" },
+            { label: "6. Evaluation", to: "/chapter-6/intro" },
+          ],
+        },
+        {
+          label: "AI Tutor",
+          to: "/intro", // Link to introduction which has the chat trigger info
+          position: "left",
         },
         {
           type: "localeDropdown",
@@ -77,25 +94,22 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "Chapters",
+          title: "Learn",
           items: [
-            { label: "Introduction", to: "/" },
-            { label: "Foundations", to: "/category/foundations" },
-            { label: "Perception", to: "/category/perception" },
+            { label: "Curriculum", to: "/#curriculum" },
+            { label: "Chapters", to: "/intro" },
+            { label: "AI Tutor", to: "/intro" },
           ],
         },
         {
           title: "Community",
           items: [
-            { label: "Panaversity", href: "https://panaversity.org" },
-            {
-              label: "GitHub",
-              href: "https://github.com/AmnaFaraz/Hackathon-I",
-            },
+            { label: "GitHub", href: "https://github.com/AmnaFaraz/Hackathon-I" },
+            { label: "Vercel", href: "https://panaversity-hackathon-1.vercel.app" },
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Amna Faraz — Panaversity. Built with Docusaurus.`,
+      copyright: `Built with Next.js, FastAPI, and Groq. © ${new Date().getFullYear()} Panaversity AI.`,
     },
     prism: {
       theme: prismThemes.github,

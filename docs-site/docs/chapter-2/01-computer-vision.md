@@ -2,7 +2,20 @@
 title: Computer Vision for Robots
 description: Applying computer vision techniques for robotic perception — object detection, depth estimation, and semantic segmentation.
 sidebar_position: 1
+slug: intro
 ---
+
+import AskButton from '@site/src/components/AskButton';
+
+<div style={{ marginBottom: '2rem', paddingBottom: '1rem', borderBottom: '1px solid var(--ifm-border-color)' }}>
+  <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>
+    Home &gt; Chapters &gt; Computer Vision for Robots
+  </small>
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+     <small style={{ color: 'var(--ifm-color-content)', opacity: 0.6 }}>⏱️ 8 min read</small>
+     <AskButton title="Robotic Vision" />
+  </div>
+</div>
 
 # Computer Vision for Robots
 

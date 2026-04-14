@@ -1,83 +1,114 @@
-/* Physical AI Textbook — Dark Tech Theme */
+/* Panaversity AI — Professional Tech Theme */
+
 :root {
-  --ifm-color-primary: #00d4ff;
-  --ifm-color-primary-dark: #00bfe6;
-  --ifm-color-primary-darker: #00b5d9;
-  --ifm-color-primary-darkest: #0094b3;
-  --ifm-color-primary-light: #1ad9ff;
-  --ifm-color-primary-lighter: #26dbff;
-  --ifm-color-primary-lightest: #4ee2ff;
-  --ifm-background-color: #080b14;
-  --ifm-background-surface-color: #0d1117;
-  --ifm-navbar-background-color: #080b14;
-  --ifm-footer-background-color: #0d1117;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 212, 255, 0.1);
   --ifm-font-family-base: "Inter", system-ui, -apple-system, sans-serif;
-  --ifm-font-family-monospace: "JetBrains Mono", "Fira Code", monospace;
+  --ifm-font-family-monospace: "JetBrains Mono", monospace;
+  --ifm-code-font-size: 95%;
 }
 
+/* DARK MODE */
 [data-theme="dark"] {
   --ifm-background-color: #080b14;
   --ifm-background-surface-color: #0d1117;
+  --ifm-color-primary: #00d4ff;
+  --ifm-color-primary-dark: #00b8d9;
+  --ifm-color-primary-darker: #00a8c7;
+  --ifm-color-primary-darkest: #008ba5;
+  --ifm-color-primary-light: #33ddff;
+  --ifm-color-primary-lighter: #66e6ff;
+  --ifm-color-primary-lightest: #99eeff;
+  --ifm-navbar-background-color: rgba(8, 11, 20, 0.95);
+  --ifm-card-background-color: #0d1117;
   --ifm-color-content: #e6edf3;
-  --ifm-color-content-secondary: #8b949e;
-  --ifm-navbar-background-color: rgba(8, 11, 20, 0.9);
-  --ifm-toc-border-color: #21262d;
+  --ifm-heading-color: #ffffff;
+  --ifm-border-color: #21262d;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 212, 255, 0.1);
 }
 
-/* Navbar blur */
+/* LIGHT MODE */
+[data-theme="light"], :root:not([data-theme="dark"]) {
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #f6f8fa;
+  --ifm-color-primary: #0969da;
+  --ifm-color-primary-dark: #0550ae;
+  --ifm-color-primary-darker: #044494;
+  --ifm-color-primary-darkest: #033d83;
+  --ifm-color-primary-light: #1c85ff;
+  --ifm-color-primary-lighter: #4da1ff;
+  --ifm-color-primary-lightest: #80bcff;
+  --ifm-navbar-background-color: rgba(255, 255, 255, 0.95);
+  --ifm-card-background-color: #ffffff;
+  --ifm-color-content: #1f2328;
+  --ifm-heading-color: #0d1117;
+  --ifm-border-color: #d0d7de;
+  --docusaurus-highlighted-code-line-bg: rgba(9, 105, 218, 0.1);
+}
+
+/* General Layout Polishes */
 .navbar {
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid #21262d;
+  border-bottom: 1px solid var(--ifm-border-color);
+  transition: all 0.3s ease;
 }
 
-/* Sidebar */
-[data-theme="dark"] .menu__link {
-  color: #8b949e;
+[data-theme="dark"] .navbar {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
-[data-theme="dark"] .menu__link:hover,
+.menu__link--active {
+  background: var(--ifm-color-primary-lightest) !important;
+  color: var(--ifm-color-primary-darkest) !important;
+}
+
 [data-theme="dark"] .menu__link--active {
-  color: #00d4ff;
-  background: rgba(0, 212, 255, 0.06);
+  background: rgba(0, 212, 255, 0.1) !important;
+  color: #00d4ff !important;
 }
 
-/* Code blocks */
-[data-theme="dark"] .prism-code {
-  background: #0d1117 !important;
-  border: 1px solid #21262d;
-  border-radius: 8px;
+/* Professional Cards */
+.card {
+  border: 1px solid var(--ifm-border-color);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  overflow: hidden;
 }
 
-/* Admonitions */
-[data-theme="dark"] .alert--info {
-  background: rgba(0, 212, 255, 0.06);
-  border-color: rgba(0, 212, 255, 0.3);
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.1);
 }
 
-/* Chatbot button */
+/* Hero Section Utilities */
+.hero-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  animation: pulse 10s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Chatbot Styles */
 #chatbot-toggle {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #00d4ff;
-  color: #080b14;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
-  transition: all 0.2s ease;
+  animation: float 3s ease-in-out infinite;
 }
 
-#chatbot-toggle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 28px rgba(0, 212, 255, 0.5);
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }

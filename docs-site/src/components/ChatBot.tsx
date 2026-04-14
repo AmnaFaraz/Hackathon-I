@@ -15,8 +15,7 @@ export default function ChatBot(): JSX.Element {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "bot",
-      content:
-        "Hi! I'm your Physical AI tutor. Ask me anything about this textbook.",
+      content: "Hi! I'm your AI Engineer tutor. Ask me anything about building production AI systems.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -24,18 +23,27 @@ export default function ChatBot(): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (open && inputRef.current) inputRef.current.focus();
+    if (open && inputRef.current) {
+      setTimeout(() => inputRef.current?.focus(), 300);
+    }
   }, [open]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = async () => {
-    const question = input.trim();
+  const clearChat = () => {
+    setMessages([{
+      role: "bot",
+      content: "Chat cleared! How can I help you now?",
+    }]);
+  };
+
+  const sendMessage = async (presetText?: string) => {
+    const question = (presetText || input).trim();
     if (!question || loading) return;
 
-    setInput("");
+    if (!presetText) setInput("");
     setMessages((prev) => [...prev, { role: "user", content: question }]);
     setLoading(true);
     setMessages((prev) => [
@@ -50,10 +58,14 @@ export default function ChatBot(): JSX.Element {
         body: JSON.stringify({ question }),
       });
 
-      if (!res.ok) throw new Error(`Server error: ${res.status}`);
+      if (!res.ok) {
+        if (res.status === 503 || res.status === 502 || res.status === 504) {
+          throw new Error("Waking up AI... please wait 30 seconds");
+        }
+        throw new Error(`Server error: ${res.status}`);
+      }
 
       const data = await res.json();
-
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
@@ -65,13 +77,12 @@ export default function ChatBot(): JSX.Element {
         return updated;
       });
     } catch (err: unknown) {
-      const errorMsg =
-        err instanceof Error ? err.message : "Connection error.";
+      const errorMsg = err instanceof Error ? err.message : "Connection error.";
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           role: "bot",
-          content: `Error: ${errorMsg} Please try again.`,
+          content: `Error: ${errorMsg}`,
           loading: false,
         };
         return updated;
@@ -101,216 +112,190 @@ export default function ChatBot(): JSX.Element {
           bottom: 24,
           right: 24,
           zIndex: 9999,
-          width: 52,
-          height: 52,
-          borderRadius: "50%",
-          background: "#00d4ff",
+          width: 56,
+          height: 56,
+          borderRadius: "16px",
+          background: "var(--ifm-color-primary)",
           color: "#080b14",
           border: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 22,
-          boxShadow: "0 4px 20px rgba(0,212,255,0.4)",
-          transition: "all 0.2s ease",
+          fontSize: 24,
+          boxShadow: "0 8px 32px rgba(0,212,255,0.3)",
+          transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
         }}
       >
         {open ? "✕" : "🤖"}
       </button>
 
       {/* Chat Panel */}
-      {open && (
+      <div
+        role="dialog"
+        aria-label="AI Tutor Chat"
+        style={{
+          position: "fixed",
+          bottom: open ? 96 : -600,
+          right: 24,
+          width: 360,
+          height: 580,
+          background: "var(--ifm-background-surface-color)",
+          border: "1px solid var(--ifm-border-color)",
+          borderRadius: 20,
+          zIndex: 9998,
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.4)",
+          overflow: "hidden",
+          transition: "all 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+          visibility: open ? "visible" : "hidden",
+          opacity: open ? 1 : 0,
+        }}
+      >
+        {/* Header */}
         <div
-          role="dialog"
-          aria-label="AI Tutor Chat"
           style={{
-            position: "fixed",
-            bottom: 88,
-            right: 24,
-            width: 340,
-            height: 520,
-            background: "#0d1117",
-            border: "1px solid #21262d",
-            borderRadius: 16,
-            zIndex: 9998,
+            padding: "16px 20px",
+            borderBottom: "1px solid var(--ifm-border-color)",
             display: "flex",
-            flexDirection: "column",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
-            overflow: "hidden",
+            alignItems: "center",
+            justifyContent: "space-between",
+            background: "var(--ifm-background-color)",
           }}
         >
-          {/* Header */}
-          <div
-            style={{
-              padding: "12px 16px",
-              borderBottom: "1px solid #21262d",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              background: "#080b14",
-            }}
-          >
-            <span style={{ fontSize: 18 }}>🤖</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontSize: 20 }}>🤖</span>
             <div>
-              <div
-                style={{
-                  color: "#e6edf3",
-                  fontWeight: 600,
-                  fontSize: 13,
-                  fontFamily: "monospace",
-                }}
-              >
-                Physical AI Tutor
+              <div style={{ fontWeight: 700, fontSize: 14 }}>
+                AI Tutor <span style={{ color: "#00ff88", fontSize: 18, verticalAlign: 'middle' }}>•</span>
               </div>
-              <div style={{ color: "#8b949e", fontSize: 11 }}>
-                Answers from this textbook only
+              <div style={{ color: "var(--ifm-color-content)", opacity: 0.6, fontSize: 11 }}>
+                Powered by Groq & RAG
               </div>
             </div>
-            <div
-              style={{
-                marginLeft: "auto",
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: "#00ff88",
-                animation: "pulse 2s infinite",
-              }}
-            />
           </div>
-
-          {/* Messages */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "12px 16px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
+          <button 
+            onClick={clearChat}
+            style={{ 
+              background: 'transparent', 
+              border: 'none', 
+              color: 'var(--ifm-color-primary)', 
+              fontSize: 11, 
+              cursor: 'pointer',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              letterSpacing: 0.5
             }}
           >
-            {messages.map((msg, i) => (
+            Clear
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: "auto",
+            padding: "20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          }}
+        >
+          {messages.map((msg, i) => (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: msg.role === "user" ? "flex-end" : "flex-start",
+              }}
+            >
               <div
-                key={i}
                 style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: msg.role === "user" ? "flex-end" : "flex-start",
+                  maxWidth: "90%",
+                  padding: "12px 16px",
+                  borderRadius: msg.role === "user" ? "16px 16px 2px 16px" : "16px 16px 16px 4px",
+                  background: msg.role === "user" ? "var(--ifm-color-primary)" : "var(--ifm-background-color)",
+                  color: msg.role === "user" ? "#080b14" : "var(--ifm-color-content)",
+                  fontSize: 14,
+                  lineHeight: 1.5,
+                  border: msg.role === "bot" ? "1px solid var(--ifm-border-color)" : "none",
+                  boxShadow: msg.role === "user" ? "0 4px 12px rgba(0,212,255,0.2)" : "none",
                 }}
               >
-                <div
-                  style={{
-                    maxWidth: "88%",
-                    padding: "8px 12px",
-                    borderRadius:
-                      msg.role === "user" ? "12px 12px 2px 12px" : "12px 12px 12px 2px",
-                    background:
-                      msg.role === "user"
-                        ? "#00d4ff"
-                        : "#161b22",
-                    color:
-                      msg.role === "user" ? "#080b14" : "#e6edf3",
-                    fontSize: 13,
-                    lineHeight: 1.5,
-                    border:
-                      msg.role === "bot" ? "1px solid #21262d" : "none",
-                  }}
-                >
-                  {msg.loading ? (
-                    <span style={{ color: "#8b949e" }}>
-                      Thinking
-                      <span
-                        style={{
-                          animation: "ellipsis 1.4s infinite",
-                          display: "inline-block",
-                        }}
-                      >
-                        ...
-                      </span>
-                    </span>
-                  ) : (
-                    msg.content
-                  )}
-                </div>
-
-                {/* Sources */}
-                {msg.sources && msg.sources.length > 0 && (
-                  <div
-                    style={{
-                      marginTop: 4,
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: 4,
-                    }}
-                  >
-                    {msg.sources.map((src, si) => (
-                      <span
-                        key={si}
-                        style={{
-                          fontSize: 10,
-                          padding: "2px 6px",
-                          borderRadius: 4,
-                          background: "rgba(0,212,255,0.1)",
-                          color: "#00d4ff",
-                          border: "1px solid rgba(0,212,255,0.2)",
-                          fontFamily: "monospace",
-                        }}
-                      >
-                        📄 {src.split("/").pop()?.replace(".md", "") || src}
-                      </span>
-                    ))}
+                {msg.loading ? (
+                  <div style={{ display: 'flex', gap: 4 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b949e', animation: 'pulse 1s infinite' }} />
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b949e', animation: 'pulse 1s infinite 0.2s' }} />
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#8b949e', animation: 'pulse 1s infinite 0.4s' }} />
                   </div>
+                ) : (
+                  msg.content
                 )}
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
+              {msg.sources && msg.sources.length > 0 && (
+                <div style={{ marginTop: 6, display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {msg.sources.map((src, si) => (
+                    <span
+                      key={si}
+                      style={{
+                        fontSize: 10,
+                        padding: "3px 8px",
+                        borderRadius: 6,
+                        background: "rgba(0,212,255,0.08)",
+                        color: "var(--ifm-color-primary)",
+                        border: "1px solid rgba(0,212,255,0.15)",
+                        fontFamily: "var(--ifm-font-family-monospace)",
+                      }}
+                    >
+                      {src.split("/").pop()?.replace(".md", "")}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
 
-          {/* Input */}
-          <div
-            style={{
-              padding: "12px 16px",
-              borderTop: "1px solid #21262d",
-              display: "flex",
-              gap: 8,
-            }}
-          >
+        {/* Input */}
+        <div style={{ padding: "16px 20px", background: "var(--ifm-background-color)", borderTop: "1px solid var(--ifm-border-color)" }}>
+          <div style={{ display: "flex", gap: 8 }}>
             <input
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask about any chapter..."
+              placeholder="Ask me anything about AI engineering..."
               disabled={loading}
-              aria-label="Ask a question"
               style={{
                 flex: 1,
-                background: "#161b22",
-                border: "1px solid #21262d",
-                borderRadius: 8,
-                padding: "8px 12px",
-                color: "#e6edf3",
-                fontSize: 13,
+                background: "var(--ifm-background-surface-color)",
+                border: "1px solid var(--ifm-border-color)",
+                borderRadius: 12,
+                padding: "10px 14px",
+                color: "var(--ifm-color-content)",
+                fontSize: 14,
                 outline: "none",
               }}
             />
             <button
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={loading || !input.trim()}
-              aria-label="Send message"
               style={{
-                width: 36,
-                height: 36,
-                borderRadius: 8,
-                background: input.trim() && !loading ? "#00d4ff" : "#21262d",
+                width: 40,
+                height: 40,
+                borderRadius: 12,
+                background: input.trim() && !loading ? "var(--ifm-color-primary)" : "var(--ifm-background-surface-color)",
                 color: "#080b14",
                 border: "none",
-                cursor: input.trim() && !loading ? "pointer" : "default",
-                fontSize: 16,
+                cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                fontSize: 18,
                 transition: "all 0.2s",
               }}
             >
@@ -318,7 +303,7 @@ export default function ChatBot(): JSX.Element {
             </button>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }
