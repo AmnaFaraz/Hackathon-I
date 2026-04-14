@@ -104,12 +104,12 @@ const config: Config = {
         {
           title: "Community",
           items: [
-            { label: "GitHub", href: "https://github.com/AmnaFaraz/Hackathon-I" },
+            { label: "GitHub", href: "https://github.com/AmnaFaraz" },
             { label: "Vercel", href: "https://panaversity-hackathon-1.vercel.app" },
           ],
         },
       ],
-      copyright: `Built with Next.js, FastAPI, and Groq. © ${new Date().getFullYear()} Panaversity AI.`,
+      copyright: `Built with Docusaurus, FastAPI, and Groq. © ${new Date().getFullYear()} Panaversity AI.`,
     },
     prism: {
       theme: prismThemes.github,
