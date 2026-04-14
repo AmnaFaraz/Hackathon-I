@@ -102,6 +102,20 @@
   to { transform: scale(1.2); opacity: 0.8; }
 }
 
+.navbar__link {
+  color: var(--ifm-color-content);
+  transition: color 0.2s ease;
+}
+
+.navbar__link:hover {
+  color: var(--ifm-color-primary);
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary) !important;
+  font-weight: 700;
+}
+
 /* Chatbot Styles */
 #chatbot-toggle {
   animation: float 3s ease-in-out infinite;

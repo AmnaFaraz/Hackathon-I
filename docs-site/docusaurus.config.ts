@@ -84,7 +84,7 @@ const config: Config = {
           position: "right",
         },
         {
-          href: "https://github.com/AmnaFaraz/Hackathon-I",
+          href: "https://github.com/AmnaFaraz",
           label: "GitHub",
           position: "right",
         },

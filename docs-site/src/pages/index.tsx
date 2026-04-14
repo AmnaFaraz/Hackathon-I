@@ -16,7 +16,7 @@ function HeroSection() {
           <Link
             className="button button--primary button--lg"
             to="/intro">
-            Start Learning Free
+            Start Learning
           </Link>
           <Link
             className="button button--secondary button--lg"
