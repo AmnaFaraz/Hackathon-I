@@ -7,7 +7,7 @@ const config: Config = {
   tagline: "AI-Native Textbook — Panaversity",
   favicon: "img/favicon.ico",
 
-  url: "https://your-site.vercel.app",
+  url: "https://panaversity-hackathon-1.vercel.app",
   baseUrl: "/",
 
   organizationName: "AmnaFaraz",

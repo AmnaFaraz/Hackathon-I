@@ -7,11 +7,7 @@ interface Message {
   loading?: boolean;
 }
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  (typeof window !== "undefined"
-    ? (window as any).__BACKEND_URL__ || "http://localhost:8000"
-    : "http://localhost:8000");
+const BACKEND_URL = "https://hackathon-i-backend.onrender.com";
 
 export default function ChatBot(): JSX.Element {
   const [open, setOpen] = useState(false);
