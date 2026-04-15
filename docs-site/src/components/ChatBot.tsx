@@ -54,6 +54,8 @@ export default function ChatBot(): JSX.Element {
     try {
       const res = await fetch(`${BACKEND_URL}/api/chat`, {
         method: "POST",
+        mode: "cors",
+        credentials: "omit",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
       });
