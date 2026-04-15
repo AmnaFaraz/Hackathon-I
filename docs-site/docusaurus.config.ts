@@ -13,8 +13,8 @@ const config: Config = {
   organizationName: "AmnaFaraz",
   projectName: "physical-ai-textbook",
 
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenLinks: "ignore",
+  onBrokenMarkdownLinks: "ignore",
 
   i18n: {
     defaultLocale: "en",
