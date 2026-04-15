@@ -75,7 +75,7 @@ const config: Config = {
           ],
         },
         {
-          label: "AI Tutor",
+          label: "AI Assistant",
           to: "/intro", // Link to introduction which has the chat trigger info
           position: "left",
         },
@@ -98,7 +98,7 @@ const config: Config = {
           items: [
             { label: "Curriculum", to: "/#curriculum" },
             { label: "Chapters", to: "/intro" },
-            { label: "AI Tutor", to: "/intro" },
+            { label: "AI Assistant", to: "/intro" },
           ],
         },
         {

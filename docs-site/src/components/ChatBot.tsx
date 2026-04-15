@@ -15,7 +15,7 @@ export default function ChatBot(): JSX.Element {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "bot",
-      content: "Hi! I'm your AI Engineer tutor. Ask me anything about building production AI systems.",
+      content: "Hi! I'm your AI Engineer assistant. Ask me anything about building production AI systems.",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -77,12 +77,13 @@ export default function ChatBot(): JSX.Element {
         return updated;
       });
     } catch (err: unknown) {
+      console.error("ChatBot Fetch Error:", err);
       const errorMsg = err instanceof Error ? err.message : "Connection error.";
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           role: "bot",
-          content: `Error: ${errorMsg}`,
+          content: `Error: ${errorMsg}. Check if the backend server is reachable at ${BACKEND_URL}/api/health`,
           loading: false,
         };
         return updated;
@@ -105,8 +106,8 @@ export default function ChatBot(): JSX.Element {
       <button
         id="chatbot-toggle"
         onClick={() => setOpen((o) => !o)}
-        aria-label={open ? "Close AI tutor" : "Open AI tutor"}
-        title="AI Tutor"
+        aria-label={open ? "Close AI assistant" : "Open AI assistant"}
+        title="AI Assistant"
         style={{
           position: "fixed",
           bottom: 24,
@@ -168,7 +169,7 @@ export default function ChatBot(): JSX.Element {
             <span style={{ fontSize: 20 }}>🤖</span>
             <div>
               <div style={{ fontWeight: 700, fontSize: 14 }}>
-                AI Tutor <span style={{ color: "#00ff88", fontSize: 18, verticalAlign: 'middle' }}>•</span>
+                AI Assistant <span style={{ color: "#00ff88", fontSize: 18, verticalAlign: 'middle' }}>•</span>
               </div>
               <div style={{ color: "var(--ifm-color-content)", opacity: 0.6, fontSize: 11 }}>
                 Powered by Groq & RAG
