@@ -20,7 +20,10 @@ def get_model() -> SentenceTransformer:
     """Lazy-load and cache the embedding model."""
     global _model
     if _model is None:
-        _model = SentenceTransformer("all-MiniLM-L6-v2")
+        import torch
+        torch.set_grad_enabled(False)  # Save memory
+        _model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+        _model.eval()
     return _model
 
 
