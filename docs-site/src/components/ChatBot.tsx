@@ -22,6 +22,12 @@ export default function ChatBot(): JSX.Element {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Wake up backend immediately so it's ready quickly
+  useEffect(() => {
+    // Silent ping
+    fetch(`${BACKEND_URL}/api/health`).catch(() => {});
+  }, []);
+
   useEffect(() => {
     if (open && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 300);
@@ -81,11 +87,17 @@ export default function ChatBot(): JSX.Element {
     } catch (err: unknown) {
       console.error("ChatBot Fetch Error:", err);
       const errorMsg = err instanceof Error ? err.message : "Connection error.";
+      
+      const isWakeUpError = errorMsg.includes("Failed to fetch") || errorMsg.includes("Waking up AI");
+      const friendlyMsg = isWakeUpError 
+        ? "The AI server was sleeping and is currently waking up (takes ~30-60s). It should be ready in seconds. Please try asking your question again!"
+        : `Error: ${errorMsg}.`;
+
       setMessages((prev) => {
         const updated = [...prev];
         updated[updated.length - 1] = {
           role: "bot",
-          content: `Error: ${errorMsg}. Check if the backend server is reachable at ${BACKEND_URL}/api/health`,
+          content: friendlyMsg,
           loading: false,
         };
         return updated;

@@ -3,6 +3,13 @@ Embeddings module — local, in-process using sentence-transformers.
 Model: all-MiniLM-L6-v2 (384-dim vectors)
 Zero external API calls. Runs fully offline.
 """
+import os
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
 from functools import lru_cache
 from sentence_transformers import SentenceTransformer
 
