@@ -1,46 +1,37 @@
 """
-Embeddings module — local, in-process using sentence-transformers.
+Embeddings module — local, in-process using fastembed (ONNX runtime).
 Model: all-MiniLM-L6-v2 (384-dim vectors)
+Takes <150MB RAM compared to >600MB with PyTorch.
 Zero external API calls. Runs fully offline.
 """
-import os
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
+from fastembed import TextEmbedding
 
-from functools import lru_cache
-from sentence_transformers import SentenceTransformer
-
-_model: SentenceTransformer | None = None
+_model: TextEmbedding | None = None
 
 
-def get_model() -> SentenceTransformer:
+def get_model() -> TextEmbedding:
     """Lazy-load and cache the embedding model."""
     global _model
     if _model is None:
-        import torch
-        torch.set_grad_enabled(False)  # Save memory
-        _model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
-        _model.eval()
+        _model = TextEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
     return _model
 
 
 def embed(text: str) -> list[float]:
     """
     Embed a single text string.
-    Returns a 384-dimensional normalized float vector.
+    Returns a 384-dimensional float vector.
     """
     model = get_model()
-    vector = model.encode(text, normalize_embeddings=True)
-    return vector.tolist()
+    # fastembed returns an iterator of arrays
+    results = list(model.embed([text]))
+    return results[0].tolist()
 
 
 def embed_batch(texts: list[str]) -> list[list[float]]:
     """
-    Embed multiple texts efficiently (batched inference).
+    Embed multiple texts efficiently.
     """
     model = get_model()
-    vectors = model.encode(texts, normalize_embeddings=True, batch_size=32)
-    return [v.tolist() for v in vectors]
+    results = list(model.embed(texts, batch_size=32))
+    return [r.tolist() for r in results]
