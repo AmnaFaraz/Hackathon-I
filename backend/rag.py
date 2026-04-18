@@ -23,6 +23,11 @@ def get_supabase() -> Client:
     return create_client(url, key)
 
 
+# Initialize clients once
+sb = get_supabase()
+groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
+
+
 async def answer(question: str) -> dict:
     """
     Full RAG pipeline:
@@ -36,7 +41,6 @@ async def answer(question: str) -> dict:
     q_embedding = embed(question)
 
     # 2. Vector similarity search
-    sb = get_supabase()
     result = sb.rpc(
         "match_docs",
         {
@@ -59,7 +63,6 @@ async def answer(question: str) -> dict:
     sources = list({c["source"] for c in chunks})
 
     # 4. Generate answer via Groq
-    groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
     completion = groq_client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[

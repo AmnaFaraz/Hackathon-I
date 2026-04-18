@@ -37,8 +37,8 @@ class IngestResponse(BaseModel):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Warm up embedding model on startup."""
-    # from embeddings import get_model
-    # get_model()  # pre-load model into memory
+    from embeddings import get_model
+    get_model()  # pre-load model into memory
     yield
 
 app = FastAPI(
