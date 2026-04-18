@@ -136,7 +136,7 @@ export default function ChatBot(): JSX.Element {
       {/* Chat Panel */}
       <div
         role="dialog"
-        aria-label="AI Tutor Chat"
+        aria-label="AI Assistent Chat"
         style={{
           position: "fixed",
           bottom: open ? 96 : -600,

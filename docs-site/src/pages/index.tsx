@@ -37,8 +37,8 @@ function StatsBar() {
         <div className="row">
           <div className="col col--3">6 Chapters</div>
           <div className="col col--3">50+ Concepts</div>
-          <div className="col col--3">AI Tutor</div>
-          <div className="col col--3">Free to Start</div>
+          <div className="col col--3">AI Assistent</div>
+          <div className="col col--3">Start Learning</div>
         </div>
       </div>
     </div>
@@ -84,19 +84,19 @@ function CurriculumSection() {
   );
 }
 
-function AITutorSection() {
+function AIAssistentSection() {
   return (
     <section className={styles.sectionAlt}>
       <div className="container text--center">
         <h2>Ask Anything, Anytime</h2>
-        <p>Our AI tutor powered by Groq answers your questions instantly</p>
+        <p>Our AI assistent powered by Groq answers your questions instantly</p>
         <button 
           className="button button--primary button--lg"
           onClick={() => {
             const btn = document.getElementById('chatbot-toggle');
             if (btn) btn.click();
           }}>
-          Try AI Tutor
+          Try AI Assistent
         </button>
       </div>
     </section>
@@ -112,7 +112,7 @@ export default function Home(): JSX.Element {
       <HeroSection />
       <StatsBar />
       <CurriculumSection />
-      <AITutorSection />
+      <AIAssistentSection />
       <main>
       </main>
     </Layout>
